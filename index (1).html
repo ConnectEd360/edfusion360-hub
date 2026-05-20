@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EdFusion360 — Internal Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#1a1f2e;--gold:#F5D47A;--blue-soft:#7B9BC8;--teal:#6BBFB0;--coral:#E87060;--lavender:#A896CC;--sage:#7FC4A8;--amber:#E8A84A;--text:#1a1f2e;--text-muted:#6b7280;--text-light:#9ca3af;--border:#e5e7eb;--bg:#f8f7f4;--white:#ffffff;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+header{background:var(--navy);padding:0 2rem;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,0.06);}
+.header-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:68px;gap:2rem;}
+.logo{display:flex;align-items:center;gap:14px;text-decoration:none;flex-shrink:0;}
+.logo-ring{width:42px;height:42px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;position:relative;flex-shrink:0;}
+.logo-dots{position:relative;width:30px;height:30px;}
+.dot{position:absolute;border-radius:50%;}
+.dot-center{width:11px;height:11px;background:var(--blue-soft);top:50%;left:50%;transform:translate(-50%,-50%);}
+.dot-top{width:6px;height:6px;background:var(--gold);top:0;left:50%;transform:translateX(-50%);}
+.dot-tr{width:6px;height:6px;background:var(--amber);top:3px;right:0;}
+.dot-br{width:6px;height:6px;background:var(--teal);bottom:3px;right:0;}
+.dot-bottom{width:6px;height:6px;background:var(--coral);bottom:0;left:50%;transform:translateX(-50%);}
+.dot-bl{width:6px;height:6px;background:var(--lavender);bottom:3px;left:0;}
+.dot-tl{width:6px;height:6px;background:var(--sage);top:3px;left:0;}
+.logo-text{line-height:1;}
+.logo-name{font-size:17px;font-weight:400;color:rgba(255,255,255,0.9);}
+.logo-name span{color:var(--gold);font-weight:500;}
+.logo-sub{font-size:9px;letter-spacing:0.1em;color:rgba(255,255,255,0.35);margin-top:3px;text-transform:uppercase;}
+.header-tag{font-size:11px;color:rgba(255,255,255,0.4);border-left:1px solid rgba(255,255,255,0.1);padding-left:1rem;white-space:nowrap;}
+.search-wrap{flex:1;max-width:420px;position:relative;}
+.search-wrap input{width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:8px 14px 8px 36px;font-size:13px;color:rgba(255,255,255,0.8);font-family:'DM Sans',sans-serif;outline:none;}
+.search-wrap input::placeholder{color:rgba(255,255,255,0.3);}
+.search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,0.3);pointer-events:none;}
+main{max-width:1100px;margin:0 auto;padding:2rem;}
+.quick-label{font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-light);margin-bottom:10px;}
+.quick-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2.5rem;}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:100px;border:1px solid var(--border);background:var(--white);font-size:12px;font-family:'DM Sans',sans-serif;color:var(--text);text-decoration:none;white-space:nowrap;}
+.chip:hover{border-color:var(--blue-soft);background:#f0f4ff;}
+.section-header{display:flex;align-items:baseline;gap:10px;margin-bottom:1rem;}
+.section-title{font-family:'DM Serif Display',serif;font-size:20px;font-weight:400;}
+.section-count{font-size:12px;color:var(--text-light);}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:3rem;}
+.card{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:1.25rem;display:block;position:relative;overflow:hidden;transition:0.2s;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent,var(--blue-soft));opacity:0;transition:0.2s;}
+.card:hover{box-shadow:0 4px 24px rgba(0,0,0,0.08);transform:translateY(-1px);}
+.card:hover::before{opacity:1;}
+.card-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-size:20px;}
+.card-title{font-size:15px;font-weight:500;margin-bottom:5px;}
+.card-desc{font-size:12px;color:var(--text-muted);line-height:1.6;margin-bottom:14px;}
+.card-files{border-top:1px solid var(--border);padding-top:12px;display:flex;flex-direction:column;gap:7px;}
+.file-link{display:flex;align-items:center;gap:7px;font-size:12px;color:#185FA5;text-decoration:none;}
+.file-link:hover{color:#0C447C;text-decoration:underline;}
+.ic-blue{background:#EEF4FD;}
+.ic-amber{background:#FEF5E4;}
+.ic-teal{background:#E8F8F5;}
+.ic-purple{background:#F2EEFB;}
+.ic-coral{background:#FEF0EE;}
+.ic-sage{background:#EAF6F1;}
+.ic-gold{background:#FEFAE8;}
+#search-results{display:none;margin-bottom:2rem;}
+#search-results.active{display:block;}
+.result-item{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--white);border:1px solid var(--border);border-radius:10px;margin-bottom:6px;text-decoration:none;font-size:13px;color:var(--text);}
+.result-item:hover{border-color:var(--blue-soft);}
+.result-tag{font-size:11px;color:var(--text-light);margin-left:auto;white-space:nowrap;}
+.no-results{font-size:13px;color:var(--text-muted);padding:1rem 0;}
+footer{text-align:center;padding:2rem;font-size:11px;color:var(--text-light);border-top:1px solid var(--border);margin-top:2rem;}
+@media(max-width:600px){.header-tag{display:none;}main{padding:1.25rem;}.grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a class="logo" href="#">
+      <div class="logo-ring">
+        <div class="logo-dots">
+          <div class="dot dot-center"></div><div class="dot dot-top"></div><div class="dot dot-tr"></div>
+          <div class="dot dot-br"></div><div class="dot dot-bottom"></div><div class="dot dot-bl"></div><div class="dot dot-tl"></div>
+        </div>
+      </div>
+      <div class="logo-text">
+        <div class="logo-name">Ed Fusion <span>360</span></div>
+        <div class="logo-sub">Educational Technology Solutions</div>
+      </div>
+    </a>
+    <div class="search-wrap">
+      <svg class="search-icon" width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+      <input type="text" id="search-input" placeholder="Search documents, templates, contacts..." autocomplete="off">
+    </div>
+    <div class="header-tag">Carol Porter, LSSP · Internal Hub</div>
+  </div>
+</header>
+
+<main>
+  <div id="search-results">
+    <div class="quick-label">Search results</div>
+    <div id="results-list"></div>
+  </div>
+
+  <div class="quick-label">Quick access</div>
+  <div class="quick-row">
+    <a class="chip" href="https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQAGGtn5gJGzSLba-Od8B4pPAZVwWFWj_OwxObKTSRehxoU?e=gnobgP" target="_blank">📄 SOW Template</a>
+    <a class="chip" href="https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQAB6BTLUEVWSLAoCUEV9BO4AQjdwpi-I7-heoYuhwifsGM?e=fBYc7K" target="_blank">📄 NDA</a>
+    <a class="chip" href="https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQDE-ChEop7aS5VPhxL9o0GYAX7LqDV4ESyCEZnCYdqhg6I?e=hmrl26" target="_blank">💰 Pricing Guide</a>
+    <a class="chip" href="https://1drv.ms/x/c/e9ae3c75c9c89bd7/IQB_3cS2z2l2QJ22euipSItSAXTKwGvcS1lXMqiBtkexDFs?e=ClA2u5" target="_blank">📊 Outreach Tracker</a>
+    <a class="chip" href="https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQAs8cWlxBJJSZzNdf5O7hXrASN2spWSTuAxZ0S2rc_dkkE?e=BM7v5G" target="_blank">✉️ Template 1 — Colleague Intro</a>
+    <a class="chip" href="https://1drv.ms/p/c/e9ae3c75c9c89bd7/IQB9n7Uf_DlnRIV_rBFqOOc9AbscitKtEwrS6LKnDqOH0Vo?e=pfFRBP" target="_blank">📊 FBISD Proposal</a>
+    <a class="chip" href="https://1drv.ms/f/c/e9ae3c75c9c89bd7/IgBQODMpBuYST7FYH-umowlJAeElAxoTJT7b0hou_QMyjbw?e=PsEsoY" target="_blank">📁 Master Binder</a>
+  </div>
+
+  <div class="section-header">
+    <div class="section-title">Business sections</div>
+    <div class="section-count">6 sections · 30+ documents</div>
+  </div>
+
+  <div class="grid">
+
+    <!-- BUSINESS FOUNDATION -->
+    <div class="card" style="--accent:#7B9BC8">
+      <div class="card-icon ic-blue">📘</div>
+      <div class="card-title">Business foundation</div>
+      <div class="card-desc">Master binder, folder system, READMEs and automation guide</div>
+      <div class="card-files">
+        <a class="file-link" href="https://1drv.ms/f/c/e9ae3c75c9c89bd7/IgBQODMpBuYST7FYH-umowlJAeElAxoTJT7b0hou_QMyjbw?e=PsEsoY" target="_blank">📁 Master Binder (all sections)</a>
+        <a class="file-link" href="https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQDm59PPPyWHR4D-X2p35tPPAYnL7nwm6nUMSZAZWlK-dUQ?e=8RFvei" target="_blank">📄 Business Administration Folder System</a>
+        <a class="file-link" href="https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQBcMHV9q9POQ678eXqs6e3vAfJ0nOuPbrQCzB0HpoU9tNk?e=FOTkzH" target="_blank">📄 Folder READMEs</a>
+        <a class="file-link" href="https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQCVv9Nhgc0LT5S_aRA6i8NoAXgZ891f6LKKPSwjx24egkE?e=a2yC03" target="_blank">📄 Read Me (Start Here)</a>
+        <a class="file-link" href="https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQDbiXLJxbPoQqVgkoQHuDSYAQZpPHwQsOuO1Z26c88nL80?e=LEYb4k" target="_blank">⚙️ Automation Guide</a>
+      </div>
+    </div>
+
+    <!-- CONTRACTS & LEGAL -->
+    <div class="card" style="--accent:#E8A84A">
+      <div class="card-icon ic-amber">📋</div>
+      <div class="card-title">Contracts & legal</div>
+      <div class="card-desc">SOW template, NDA, pricing guide and contractor agreement</div>
+      <div class="card-files">
+        <a class="file-link" href="https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQAGGtn5gJGzSLba-Od8B4pPAZVwWFWj_OwxObKTSRehxoU?e=gnobgP" target="_blank">📄 SOW Template</a>
+        <a class="file-link" href="https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQAB6BTLUEVWSLAoCUEV9BO4AQjdwpi-I7-heoYuhwifsGM?e=fBYc7K" target="_blank">📄 NDA</a>
+        <a class="file-link" href="https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQDE-ChEop7aS5VPhxL9o0GYAX7LqDV4ESyCEZnCYdqhg6I?e=hmrl26" target="_blank">💰 Pricing Guide</a>
+        <a class="file-link" href="https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQBAyDtvaKm9TbFuZ9qvrRtcAdxh9X3c8m3kwsvJERh8jT8?e=9sr3BC" target="_blank">📄 Contractor Agreement</a>
+      </div>
+    </div>
+
+    <!-- CLIENT PIPELINE -->
+    <div class="card" style="--accent:#6BBFB0">
+      <div class="card-icon ic-teal">👥</div>
+      <div class="card-title">Client pipeline</div>
+      <div class="card-desc">Outreach tracker, all email templates and voicemail scripts</div>
+      <div class="card-files">
+        <a class="file-link" href="https://1drv.ms/x/c/e9ae3c75c9c89bd7/IQB_3cS2z2l2QJ22euipSItSAXTKwGvcS1lXMqiBtkexDFs?e=ClA2u5" target="_blank">📊 Outreach Tracker</a>
+        <a class="file-link" href="https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQAm_gJYDN-0QoXR761RlZsUAUWCTcma8ytML3RSGCwohWo?e=0Fq1yc" target="_blank">📄 All Email Templates (combined)</a>
+        <a class="file-link" href="https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQDJ8E5JNxKVSJ5vdB7m-NLOAXU71xNxzMK6BMiU-lXdXUE?e=v55X0Q" target="_blank">📄 Start Here — Outreach Guide</a>
+        <a class="file-link" href="https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQAs8cWlxBJJSZzNdf5O7hXrASN2spWSTuAxZ0S2rc_dkkE?e=BM7v5G" target="_blank">✉️ Template 1 — Colleague Intro</a>
+        <a class="file-link" href="https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQBR-CW-f5WbToi9uJ5Pw-3EAX0h9hBkqlvTOkTC7OMowDI?e=pTSea0" target="_blank">✉️ Template 2 — Warm Intro</a>
+        <a class="file-link" href="https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQDFoRC24v7jRYV9yMJuveIuAcM6T4o5hpWvisKco3gOt4g?e=q1ZUoV" target="_blank">✉️ Template 3 — Follow-Up #1</a>
+        <a class="file-link" href="https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQB9Bsh2HxrGTKJAq6AUTzsrAT9qNoilGKv5l7zTayGC84Y?e=X6waca" target="_blank">✉️ Template 4 — Follow-Up #2</a>
+        <a class="file-link" href="https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQDKx5KM_tXRRqFk8jWYppD1AV-YtPNzrguPFP2s0QUJVJM?e=8w8sEH" target="_blank">✉️ Template 5 — Closing the Loop</a>
+        <a class="file-link" href="https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQBf5B2pXNovTYMe1ZrvO2B4AcVZMwwa1SY5BASahqgzgdM?e=mioO7e" target="_blank">📞 Template 6 — Voicemail Script</a>
+      </div>
+    </div>
+
+    <!-- DISTRICT FILES -->
+    <div class="card" style="--accent:#A896CC">
+      <div class="card-icon ic-purple">🏫</div>
+      <div class="card-title">District files</div>
+      <div class="card-desc">FBISD prototype, governance, cost justification and client binder</div>
+      <div class="card-files">
+        <a class="file-link" href="https://1drv.ms/f/c/e9ae3c75c9c89bd7/IgCB8QfPUDx5QYmALGOHlHjTATA999Ib1a-lDT22HOKfFKY?e=kfrExs" target="_blank">📁 FBISD District Prototype Folder</a>
+        <a class="file-link" href="https://1drv.ms/p/c/e9ae3c75c9c89bd7/IQB9n7Uf_DlnRIV_rBFqOOc9AbscitKtEwrS6LKnDqOH0Vo?e=pfFRBP" target="_blank">📊 FBISD Governance Proposal (PPT)</a>
+        <a class="file-link" href="https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQB1JsfCPvdwSI5MSs-UF__0Ab_yYC087utCUXPMNxULuKc?e=sERUoq" target="_blank">📄 SPED Hub Governance Proposal</a>
+        <a class="file-link" href="https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQCLSzI6kIEJSq9uWaO4qy5VARp7UkZpNzn-UfsH-4jTVhY?e=ag589y" target="_blank">📄 SPED Hub Cost Justification</a>
+        <a class="file-link" href="https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQAwXACAfDS_QpCFsp-yi4yJAcxGAEPsSnGTfpz8fqR-DXY?e=Q1Xvlw" target="_blank">📄 FBISD Development & Impact Portfolio</a>
+        <a class="file-link" href="https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQCx90buZpGfSbje7o_7w6UpASWoQ3bQQrhvAAFl2Fs-JwQ?e=wRKmzw" target="_blank">📄 Client Binder Checklist</a>
+        <a class="file-link" href="https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQDXsryCZjtLSLi4iq7NYVDUASGCVm_Yp5Sx2yOT2eos1m8?e=nN18VW" target="_blank">📄 WJ-V Training Resources (FBISD)</a>
+      </div>
+    </div>
+
+    <!-- SALES & MARKETING -->
+    <div class="card" style="--accent:#E87060">
+      <div class="card-icon ic-coral">📈</div>
+      <div class="card-title">Sales & marketing</div>
+      <div class="card-desc">Pitch deck, hub mockups, branding guide and logo assets</div>
+      <div class="card-files">
+        <a class="file-link" href="https://1drv.ms/p/c/e9ae3c75c9c89bd7/IQDwEQNL_BHUSrNKQwnc48pmARA7EVJmq4laPDcKcaaPG7Q?e=hVwu9U" target="_blank">📊 District Pitch Deck</a>
+        <a class="file-link" href="https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQA-DwJJ11SfRpBjf0puCI8tAaILOhOmF5sFSdz5DI9hYZU?e=q4V2zg" target="_blank">🖼️ Hub Mock Ups</a>
+        <a class="file-link" href="https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQBjLAUy2zXWS67cvubAU8JuAX0OPtTB3yWPohMmigtHQXw?e=B4yI4Q" target="_blank">🎨 Branding & Assets Guide</a>
+        <a class="file-link" href="https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQCYKgDMXUObRatW0G-R1s-7AW3VZozZ_LeMNU1Zwpox80w?e=CPrgo9" target="_blank">💻 Logo Source Code (Original)</a>
+        <a class="file-link" href="https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQAplYez-8l-R7UBFHvcLohQAatUAiSDtqVz7kt9jNLjF70?e=XIVZxS" target="_blank">💻 Logo Source Code (Python)</a>
+        <a class="file-link" href="https://1drv.ms/i/c/e9ae3c75c9c89bd7/IQD0Lk56-nxRQJCA486uetXlAbJxzIf8btnbZciebfmzNxc?e=EIinOz" target="_blank">🖼️ Logo — Circle Embossed</a>
+        <a class="file-link" href="https://1drv.ms/i/c/e9ae3c75c9c89bd7/IQBZbhowYAJvQLmibXcUgFY7AS9qC-ai7q7SIDNsktaViEg?e=Iq52u6" target="_blank">🖼️ Logo — Circle Flat</a>
+        <a class="file-link" href="https://1drv.ms/i/c/e9ae3c75c9c89bd7/IQB9kG5Sj4vJSJgFFQqFpwRsAYwEZ7XzhzuNrl6DwRZE6Yc?e=Wt4oV8" target="_blank">🖼️ Logo — Embossed Transparent</a>
+        <a class="file-link" href="https://1drv.ms/i/c/e9ae3c75c9c89bd7/IQCA_qZoU1OSToH2OzO8ESOEAVW0E4tqRhQs-D7PjIubYz0?e=Irmm6L" target="_blank">🖼️ Logo — Flat Transparent</a>
+        <a class="file-link" href="https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQAeArfubBKUTL6b1t6f2k6LAWIntcgrYb-owcZM-YD4zYw?e=b4K7Tk" target="_blank">🎬 Descript Guide</a>
+      </div>
+    </div>
+
+    <!-- RESEARCH & STRATEGY -->
+    <div class="card" style="--accent:#7FC4A8">
+      <div class="card-icon ic-sage">🔬</div>
+      <div class="card-title">Research & strategy</div>
+      <div class="card-desc">Competition analysis, SWOT, ideas and industry research</div>
+      <div class="card-files">
+        <a class="file-link" href="https://1drv.ms/f/c/e9ae3c75c9c89bd7/IgBQODMpBuYST7FYH-umowlJAeElAxoTJT7b0hou_QMyjbw?e=PsEsoY" target="_blank">📁 Research folder</a>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer>EdFusion360 · Educational Technology Solutions · Internal use only · Updated May 2026</footer>
+
+<script>
+const resources=[
+  {title:'SOW Template',section:'Contracts & Legal',url:'https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQAGGtn5gJGzSLba-Od8B4pPAZVwWFWj_OwxObKTSRehxoU?e=gnobgP'},
+  {title:'NDA',section:'Contracts & Legal',url:'https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQAB6BTLUEVWSLAoCUEV9BO4AQjdwpi-I7-heoYuhwifsGM?e=fBYc7K'},
+  {title:'Pricing Guide',section:'Contracts & Legal',url:'https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQDE-ChEop7aS5VPhxL9o0GYAX7LqDV4ESyCEZnCYdqhg6I?e=hmrl26'},
+  {title:'Contractor Agreement',section:'Contracts & Legal',url:'https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQBAyDtvaKm9TbFuZ9qvrRtcAdxh9X3c8m3kwsvJERh8jT8?e=9sr3BC'},
+  {title:'Outreach Tracker',section:'Client Pipeline',url:'https://1drv.ms/x/c/e9ae3c75c9c89bd7/IQB_3cS2z2l2QJ22euipSItSAXTKwGvcS1lXMqiBtkexDFs?e=ClA2u5'},
+  {title:'All Email Templates',section:'Client Pipeline',url:'https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQAm_gJYDN-0QoXR761RlZsUAUWCTcma8ytML3RSGCwohWo?e=0Fq1yc'},
+  {title:'Template 1 — Colleague Introduction',section:'Client Pipeline',url:'https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQAs8cWlxBJJSZzNdf5O7hXrASN2spWSTuAxZ0S2rc_dkkE?e=BM7v5G'},
+  {title:'Template 2 — Warm Introduction',section:'Client Pipeline',url:'https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQBR-CW-f5WbToi9uJ5Pw-3EAX0h9hBkqlvTOkTC7OMowDI?e=pTSea0'},
+  {title:'Template 3 — Follow-Up #1',section:'Client Pipeline',url:'https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQDFoRC24v7jRYV9yMJuveIuAcM6T4o5hpWvisKco3gOt4g?e=q1ZUoV'},
+  {title:'Template 4 — Follow-Up #2',section:'Client Pipeline',url:'https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQB9Bsh2HxrGTKJAq6AUTzsrAT9qNoilGKv5l7zTayGC84Y?e=X6waca'},
+  {title:'Template 5 — Closing the Loop',section:'Client Pipeline',url:'https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQDKx5KM_tXRRqFk8jWYppD1AV-YtPNzrguPFP2s0QUJVJM?e=8w8sEH'},
+  {title:'Template 6 — Voicemail Script',section:'Client Pipeline',url:'https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQBf5B2pXNovTYMe1ZrvO2B4AcVZMwwa1SY5BASahqgzgdM?e=mioO7e'},
+  {title:'District Pitch Deck',section:'Sales & Marketing',url:'https://1drv.ms/p/c/e9ae3c75c9c89bd7/IQDwEQNL_BHUSrNKQwnc48pmARA7EVJmq4laPDcKcaaPG7Q?e=hVwu9U'},
+  {title:'Hub Mock Ups',section:'Sales & Marketing',url:'https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQA-DwJJ11SfRpBjf0puCI8tAaILOhOmF5sFSdz5DI9hYZU?e=q4V2zg'},
+  {title:'Branding & Assets Guide',section:'Sales & Marketing',url:'https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQBjLAUy2zXWS67cvubAU8JuAX0OPtTB3yWPohMmigtHQXw?e=B4yI4Q'},
+  {title:'FBISD District Prototype Folder',section:'District Files',url:'https://1drv.ms/f/c/e9ae3c75c9c89bd7/IgCB8QfPUDx5QYmALGOHlHjTATA999Ib1a-lDT22HOKfFKY?e=kfrExs'},
+  {title:'FBISD Governance Proposal',section:'District Files',url:'https://1drv.ms/p/c/e9ae3c75c9c89bd7/IQB9n7Uf_DlnRIV_rBFqOOc9AbscitKtEwrS6LKnDqOH0Vo?e=pfFRBP'},
+  {title:'SPED Hub Cost Justification',section:'District Files',url:'https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQCLSzI6kIEJSq9uWaO4qy5VARp7UkZpNzn-UfsH-4jTVhY?e=ag589y'},
+  {title:'FBISD Development & Impact Portfolio',section:'District Files',url:'https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQAwXACAfDS_QpCFsp-yi4yJAcxGAEPsSnGTfpz8fqR-DXY?e=Q1Xvlw'},
+  {title:'Client Binder Checklist',section:'District Files',url:'https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQCx90buZpGfSbje7o_7w6UpASWoQ3bQQrhvAAFl2Fs-JwQ?e=wRKmzw'},
+  {title:'WJ-V Training Resources',section:'District Files',url:'https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQDXsryCZjtLSLi4iq7NYVDUASGCVm_Yp5Sx2yOT2eos1m8?e=nN18VW'},
+  {title:'Master Binder',section:'Business Foundation',url:'https://1drv.ms/f/c/e9ae3c75c9c89bd7/IgBQODMpBuYST7FYH-umowlJAeElAxoTJT7b0hou_QMyjbw?e=PsEsoY'},
+  {title:'Business Administration Folder System',section:'Business Foundation',url:'https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQDm59PPPyWHR4D-X2p35tPPAYnL7nwm6nUMSZAZWlK-dUQ?e=8RFvei'},
+  {title:'Automation Guide',section:'Business Foundation',url:'https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQDbiXLJxbPoQqVgkoQHuDSYAQZpPHwQsOuO1Z26c88nL80?e=LEYb4k'},
+  {title:'Read Me — Start Here',section:'Business Foundation',url:'https://1drv.ms/w/c/e9ae3c75c9c89bd7/IQCVv9Nhgc0LT5S_aRA6i8NoAXgZ891f6LKKPSwjx24egkE?e=a2yC03'},
+];
+const input=document.getElementById('search-input');
+const resultsDiv=document.getElementById('search-results');
+const resultsList=document.getElementById('results-list');
+input.addEventListener('input',()=>{
+  const q=input.value.toLowerCase().trim();
+  if(!q){resultsDiv.classList.remove('active');return;}
+  const matches=resources.filter(r=>r.title.toLowerCase().includes(q)||r.section.toLowerCase().includes(q));
+  resultsDiv.classList.add('active');
+  resultsList.innerHTML=matches.length===0?'<div class="no-results">No results found. Try a different search term.</div>':matches.map(r=>`<a class="result-item" href="${r.url}" target="_blank">📄 ${r.title}<span class="result-tag">${r.section}</span></a>`).join('');
+});
+</script>
+</body>
+</html>
